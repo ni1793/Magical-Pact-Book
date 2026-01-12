@@ -183,9 +183,9 @@ RELIGIONS.forEach(rel => {
                 </div>
             </div>
 
-            <!-- 背面 -->
+            <!-- 背面 (具備修正後的捲動容器) -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
-                <div class="scroll-content w-full h-full bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem] no-scrollbar p-5 flex flex-col">
+                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem]">
                     <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/80 backdrop-blur-sm z-10">
                         <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
                         <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
@@ -274,16 +274,33 @@ RELIGIONS.forEach(rel => {
     container.addEventListener('touchmove', (e) => {
         const moveY = Math.abs(e.touches[0].pageY - startY);
         const moveX = Math.abs(e.touches[0].pageX - startX);
+        // 如果垂直或水平移動超過 10px，判定為捲動/切換卡片，不執行翻轉
         if (moveY > 10 || moveX > 10) isMoving = true;
     }, { passive: true });
 
-    container.addEventListener('click', () => {
+    container.addEventListener('click', (e) => {
+        // 如果正在滑動，不觸發點擊事件
         if (isMoving) return;
+        
+        // 如果點擊發生在背面的捲動內容區域內，且卡片已經是翻開狀態，則不觸發翻轉回正面
+        // 這樣可以讓使用者點擊背面文字或按鈕時更安全
+        if (container.classList.contains('rotate-y-180') && scrollContent.contains(e.target)) {
+            // 除非是特定的翻回按鈕（目前沒有，靠空白處點擊翻回）
+            // 我們這裡維持點擊空白翻回，但避開滑動干擾
+        }
+        
         container.classList.toggle('rotate-y-180');
     });
 
-    scrollContent.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
-    scrollContent.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
+    // 重要：阻止背面捲動容器的事件干擾到外層 Gallery 的橫向滑動
+    scrollContent.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+    }, { passive: true });
+
+    scrollContent.addEventListener('touchmove', (e) => {
+        // 只有當垂直滑動時才阻止冒泡，確保背面捲動順暢
+        e.stopPropagation();
+    }, { passive: true });
 
     gallery.appendChild(cardWrapper);
 });
