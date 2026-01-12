@@ -3,21 +3,19 @@ body {
     background-color: #fffafa;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    touch-action: pan-y;
 }
 
-/* 3D 翻轉核心系統 */
+/* 基礎容器 */
 .perspective-2000 { 
     perspective: 2000px;
-    -webkit-perspective: 2000px;
 }
 
 .card-container {
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.4s ease;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
     position: relative;
-    will-change: transform, height;
+    width: 100%;
+    height: 100%;
 }
 
 .card-face {
@@ -30,81 +28,72 @@ body {
     border-radius: 2.5rem;
 }
 
-.card-front {
-    z-index: 2;
-    transform: rotateY(0deg);
-}
-
 .card-back {
     transform: rotateY(180deg);
-    z-index: 1;
-    overflow: hidden;
 }
 
 .rotate-y-180 { 
     transform: rotateY(180deg); 
 }
 
-/* 手機版翻開後自動變長之關鍵修正 */
+/* =============================================
+   手機版核心修正：翻開後變長，不使用內部捲動
+   ============================================= */
 @media (max-width: 768px) {
-    /* 當卡片容器翻轉時，取消固定高度限制 */
+    /* 1. 容器翻轉後高度改為 auto */
     .card-wrapper.is-flipped {
         height: auto !important;
     }
 
     .card-container.rotate-y-180 {
+        transform: none !important; /* 手機版不使用 3D 旋轉防止佈局溢出 */
         height: auto !important;
-        min-height: 540px;
     }
 
-    /* 翻到背面時，讓背面內容撐開容器 */
-    .card-container.rotate-y-180 .card-back {
-        position: relative; /* 取消絕對定位，才能撐開父層 */
-        height: auto !important;
-        min-height: 540px;
+    /* 2. 翻面後的顯示邏輯 */
+    .card-wrapper.is-flipped .card-front {
+        display: none !important; /* 隱藏正面 */
     }
 
-    /* 正面在翻轉後隱藏，避免干擾高度 */
-    .card-container.rotate-y-180 .card-front {
-        display: none;
+    .card-wrapper.is-flipped .card-back {
+        position: relative !important; /* 改為相對定位以撐開高度 */
+        transform: none !important;    /* 移除旋轉角度 */
+        height: auto !important;
+        min-height: 540px;
+        display: block !important;
+        z-index: 10;
     }
-    
+
+    /* 3. 內容容器 */
     .scroll-content {
         height: auto !important;
-        overflow-y: visible !important;
+        overflow-y: visible !important; /* 允許向外延伸 */
+        padding: 1.5rem;
     }
 }
 
-/* 電腦版維持原樣：內部捲動 */
+/* =============================================
+   電腦版維持原始：固定高度 + 內部捲動
+   ============================================= */
 @media (min-width: 769px) {
     .scroll-content {
         height: 100%;
-        width: 100%;
         overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch; 
-        overscroll-behavior: contain;
         padding: 1.25rem;
-        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
-/* 通用樣式 */
+/* 通用裝飾 */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-
 .animate-spin-slow { animation: rotate-slow 15s linear infinite; }
-.animate-float { animation: float 4s ease-in-out infinite; }
-
-.snap-x { scroll-snap-type: x mandatory; }
-.snap-center { scroll-snap-align: center; }
 
 .glass {
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 

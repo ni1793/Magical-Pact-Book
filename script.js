@@ -145,7 +145,7 @@ const gallery = document.getElementById('gallery');
 
 RELIGIONS.forEach(rel => {
     const cardWrapper = document.createElement('div');
-    cardWrapper.className = 'card-wrapper flex-shrink-0 w-[300px] h-[540px] snap-center perspective-2000 py-4';
+    cardWrapper.className = 'card-wrapper flex-shrink-0 w-[300px] h-[540px] snap-center perspective-2000 py-4 transition-all duration-300';
     
     cardWrapper.innerHTML = `
         <div class="card-container w-full h-full cursor-pointer rounded-[2.5rem]">
@@ -185,16 +185,13 @@ RELIGIONS.forEach(rel => {
 
             <!-- 背面 -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
-                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem] p-5">
+                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem]">
                     <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
                         <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
                         <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
                     </div>
 
-                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-100 shadow-inner relative italic overflow-hidden">
-                        <div class="absolute -right-2 -bottom-2 opacity-5 ${rel.accent}">
-                            <i data-lucide="sparkle" class="w-12 h-12"></i>
-                        </div>
+                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-100 shadow-inner relative italic">
                         <p class="text-[11px] text-slate-700 font-bold leading-relaxed text-center relative z-10 incantation-shadow">
                             ${rel.incantation}
                         </p>
@@ -203,32 +200,19 @@ RELIGIONS.forEach(rel => {
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-2">
                             <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
-                                    <i data-lucide="sword" class="w-2.5 h-2.5"></i> 法器
-                                </div>
+                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1">法器</div>
                                 <div class="text-[10px] font-bold ${rel.accent}">${rel.relic.name}</div>
                             </div>
                             <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
-                                    <i data-lucide="map" class="w-2.5 h-2.5"></i> 場域
-                                </div>
+                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1">場域</div>
                                 <div class="text-[10px] font-bold ${rel.accent}">${rel.domain.name}</div>
                             </div>
                         </div>
-
-                        <div>
-                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
-                                <i data-lucide="shield" class="w-2.5 h-2.5"></i> 被動加護
-                            </h4>
-                            <p class="text-[10px] text-slate-600 leading-relaxed bg-white p-3 rounded-xl border border-slate-100 shadow-sm italic">
-                                ${rel.passive}
-                            </p>
+                        <div class="bg-white p-3 rounded-xl border border-slate-100">
+                            <h4 class="text-[8px] font-black text-slate-400 uppercase mb-1.5">被動加護</h4>
+                            <p class="text-[10px] text-slate-600 leading-relaxed">${rel.passive}</p>
                         </div>
-
                         <div class="space-y-2">
-                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
-                                <i data-lucide="zap" class="w-2.5 h-2.5"></i> 核心技能
-                            </h4>
                             ${rel.activeSkills.map(s => `
                                 <div class="bg-white/80 p-3 rounded-xl border border-slate-100 shadow-sm">
                                     <div class="text-[10px] font-black ${rel.accent} mb-0.5">${s.name}</div>
@@ -236,19 +220,14 @@ RELIGIONS.forEach(rel => {
                                 </div>
                             `).join('')}
                         </div>
-
-                        <div class="pt-2 border-t border-slate-100 pb-4">
-                            <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100/50 shadow-sm">
-                                <div class="text-[9px] font-black text-indigo-700 mb-1 flex items-center gap-1.5 uppercase">
-                                    <i data-lucide="users" class="w-3 h-3"></i> ${rel.groupSkill.name} (連攜技)
-                                </div>
-                                <p class="text-[9px] text-indigo-600/80 leading-snug font-medium">${rel.groupSkill.desc}</p>
-                            </div>
+                        <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                             <div class="text-[9px] font-black text-indigo-700 mb-1 uppercase">${rel.groupSkill.name} (連攜技)</div>
+                             <p class="text-[9px] text-indigo-600/80">${rel.groupSkill.desc}</p>
                         </div>
                     </div>
 
-                    <div class="mt-4 flex justify-center pb-6">
-                        <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest shadow-md">
+                    <div class="mt-4 flex justify-center pb-8">
+                        <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest">
                             ${rel.philosophy}
                         </div>
                     </div>
@@ -259,27 +238,9 @@ RELIGIONS.forEach(rel => {
 
     const container = cardWrapper.querySelector('.card-container');
 
-    let startY = 0;
-    let startX = 0;
-    let isMoving = false;
-
-    container.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].pageY;
-        startX = e.touches[0].pageX;
-        isMoving = false;
-    }, { passive: true });
-
-    container.addEventListener('touchmove', (e) => {
-        const moveY = Math.abs(e.touches[0].pageY - startY);
-        const moveX = Math.abs(e.touches[0].pageX - startX);
-        if (moveY > 10 || moveX > 10) isMoving = true;
-    }, { passive: true });
-
-    container.addEventListener('click', (e) => {
-        if (isMoving) return;
-        
+    container.addEventListener('click', () => {
         const isFlipped = container.classList.toggle('rotate-y-180');
-        // 同步 wrapper 的狀態，讓 CSS 能調整外部高度
+        // 同步狀態給 wrapper，這會觸發手機版的 CSS (變長模式)
         cardWrapper.classList.toggle('is-flipped', isFlipped);
     });
 
