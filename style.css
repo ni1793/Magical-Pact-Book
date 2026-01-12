@@ -37,38 +37,45 @@ body {
 }
 
 /* =============================================
-   手機版核心修正：翻開後變長，不使用內部捲動
+   手機版核心修正：翻開後變長，且 Y 軸固定佈局
    ============================================= */
 @media (max-width: 768px) {
-    /* 1. 容器翻轉後高度改為 auto */
+    /* 1. 容器翻轉後高度改為 auto，並取消 Y 軸偏移的可能干擾 */
     .card-wrapper.is-flipped {
         height: auto !important;
+        min-height: 540px;
+        /* 確保卡片在垂直軸上穩定對齊 */
+        align-self: flex-start;
     }
 
     .card-container.rotate-y-180 {
-        transform: none !important; /* 手機版不使用 3D 旋轉防止佈局溢出 */
+        transform: none !important; /* 手機版展開模式不使用 3D 旋轉防止 Y 軸位移錯誤 */
         height: auto !important;
     }
 
-    /* 2. 翻面後的顯示邏輯 */
+    /* 2. 翻面後的顯示邏輯：強制內容在 Y 軸流向中佔位 */
     .card-wrapper.is-flipped .card-front {
-        display: none !important; /* 隱藏正面 */
+        display: none !important; 
     }
 
     .card-wrapper.is-flipped .card-back {
-        position: relative !important; /* 改為相對定位以撐開高度 */
-        transform: none !important;    /* 移除旋轉角度 */
+        position: relative !important; 
+        transform: none !important;    
         height: auto !important;
         min-height: 540px;
         display: block !important;
         z-index: 10;
+        /* 防止任何可能導致 Y 軸晃動的屬性 */
+        backface-visibility: visible;
     }
 
-    /* 3. 內容容器 */
+    /* 3. 內容容器：確保捲動是由頁面 Y 軸控制，而非卡片內部 */
     .scroll-content {
         height: auto !important;
-        overflow-y: visible !important; /* 允許向外延伸 */
+        overflow-y: visible !important; 
         padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
     }
 }
 
