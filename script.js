@@ -145,7 +145,7 @@ const gallery = document.getElementById('gallery');
 
 RELIGIONS.forEach(rel => {
     const cardWrapper = document.createElement('div');
-    cardWrapper.className = 'flex-shrink-0 w-[300px] h-[540px] snap-center perspective-2000 py-4';
+    cardWrapper.className = 'card-wrapper flex-shrink-0 w-[300px] h-[540px] snap-center perspective-2000 py-4';
     
     cardWrapper.innerHTML = `
         <div class="card-container w-full h-full cursor-pointer rounded-[2.5rem]">
@@ -185,8 +185,7 @@ RELIGIONS.forEach(rel => {
 
             <!-- 背面 -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
-                <!-- 修正點：scroll-content 作為主要容器 -->
-                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem]">
+                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem] p-5">
                     <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
                         <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
                         <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
@@ -259,13 +258,11 @@ RELIGIONS.forEach(rel => {
     `;
 
     const container = cardWrapper.querySelector('.card-container');
-    const scrollContent = cardWrapper.querySelector('.scroll-content');
 
     let startY = 0;
     let startX = 0;
     let isMoving = false;
 
-    // 點擊事件處理
     container.addEventListener('touchstart', (e) => {
         startY = e.touches[0].pageY;
         startX = e.touches[0].pageX;
@@ -279,28 +276,14 @@ RELIGIONS.forEach(rel => {
     }, { passive: true });
 
     container.addEventListener('click', (e) => {
-        // 1. 如果正在大幅移動（捲動中），不觸發翻轉
         if (isMoving) return;
-
-        // 2. 核心邏輯：如果是在背面點擊，且 scrollContent 正在捲動或點擊在內容上
-        // 我們檢查點擊是否在背面，且卡片已經翻轉
-        if (container.classList.contains('rotate-y-180')) {
-            // 在背面時，只有點擊到邊緣或特定區域才翻回去，防止捲動時誤觸
-            // 這裡我們簡化：點擊背面依然翻回，但因為 isMoving 判定，捲動動作不會觸發此處
-            container.classList.remove('rotate-y-180');
-        } else {
-            container.classList.add('rotate-y-180');
-        }
-    });
-
-    // 針對背面的捲動容器進行特殊處理
-    scrollContent.addEventListener('scroll', () => {
-        // 捲動時標記為 Moving 防止誤翻轉
-        isMoving = true;
+        
+        const isFlipped = container.classList.toggle('rotate-y-180');
+        // 同步 wrapper 的狀態，讓 CSS 能調整外部高度
+        cardWrapper.classList.toggle('is-flipped', isFlipped);
     });
 
     gallery.appendChild(cardWrapper);
 });
 
-// 初始化 Lucide 圖標
 window.onload = () => lucide.createIcons();

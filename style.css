@@ -3,7 +3,6 @@ body {
     background-color: #fffafa;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    /* 允許垂直捲動但防止縮放 */
     touch-action: pan-y;
 }
 
@@ -14,11 +13,11 @@ body {
 }
 
 .card-container {
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.4s ease;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     position: relative;
-    will-change: transform;
+    will-change: transform, height;
 }
 
 .card-face {
@@ -39,30 +38,57 @@ body {
 .card-back {
     transform: rotateY(180deg);
     z-index: 1;
-    /* 核心修正：背面必須允許內容捲動，且設定觸控動作 */
-    overflow: hidden; 
-    touch-action: pan-y;
+    overflow: hidden;
 }
 
 .rotate-y-180 { 
     transform: rotateY(180deg); 
 }
 
-/* 行動端捲動容器核心修正 */
-.scroll-content {
-    height: 100%;
-    width: 100%;
-    overflow-y: auto !important;
-    overflow-x: hidden;
-    /* 啟用 iOS 慣性捲動 */
-    -webkit-overflow-scrolling: touch; 
-    overscroll-behavior: contain;
-    padding: 1.25rem;
-    box-sizing: border-box;
-    display: block; /* 確保內容流向正常 */
+/* 手機版翻開後自動變長之關鍵修正 */
+@media (max-width: 768px) {
+    /* 當卡片容器翻轉時，取消固定高度限制 */
+    .card-wrapper.is-flipped {
+        height: auto !important;
+    }
+
+    .card-container.rotate-y-180 {
+        height: auto !important;
+        min-height: 540px;
+    }
+
+    /* 翻到背面時，讓背面內容撐開容器 */
+    .card-container.rotate-y-180 .card-back {
+        position: relative; /* 取消絕對定位，才能撐開父層 */
+        height: auto !important;
+        min-height: 540px;
+    }
+
+    /* 正面在翻轉後隱藏，避免干擾高度 */
+    .card-container.rotate-y-180 .card-front {
+        display: none;
+    }
+    
+    .scroll-content {
+        height: auto !important;
+        overflow-y: visible !important;
+    }
 }
 
-/* 工具類別 */
+/* 電腦版維持原樣：內部捲動 */
+@media (min-width: 769px) {
+    .scroll-content {
+        height: 100%;
+        width: 100%;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch; 
+        overscroll-behavior: contain;
+        padding: 1.25rem;
+        box-sizing: border-box;
+    }
+}
+
+/* 通用樣式 */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
