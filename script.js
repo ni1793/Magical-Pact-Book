@@ -183,15 +183,16 @@ RELIGIONS.forEach(rel => {
                 </div>
             </div>
 
-            <!-- 背面 (具備修正後的捲動容器) -->
+            <!-- 背面 -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
+                <!-- 修正點：scroll-content 作為主要容器 -->
                 <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem]">
-                    <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/80 backdrop-blur-sm z-10">
+                    <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
                         <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
                         <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
                     </div>
 
-                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-100 shadow-inner relative italic overflow-hidden shrink-0">
+                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-100 shadow-inner relative italic overflow-hidden">
                         <div class="absolute -right-2 -bottom-2 opacity-5 ${rel.accent}">
                             <i data-lucide="sparkle" class="w-12 h-12"></i>
                         </div>
@@ -237,7 +238,7 @@ RELIGIONS.forEach(rel => {
                             `).join('')}
                         </div>
 
-                        <div class="pt-2 border-t border-slate-100">
+                        <div class="pt-2 border-t border-slate-100 pb-4">
                             <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100/50 shadow-sm">
                                 <div class="text-[9px] font-black text-indigo-700 mb-1 flex items-center gap-1.5 uppercase">
                                     <i data-lucide="users" class="w-3 h-3"></i> ${rel.groupSkill.name} (連攜技)
@@ -247,7 +248,7 @@ RELIGIONS.forEach(rel => {
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-8 flex justify-center pb-2">
+                    <div class="mt-4 flex justify-center pb-6">
                         <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest shadow-md">
                             ${rel.philosophy}
                         </div>
@@ -260,11 +261,11 @@ RELIGIONS.forEach(rel => {
     const container = cardWrapper.querySelector('.card-container');
     const scrollContent = cardWrapper.querySelector('.scroll-content');
 
-    // 狀態變數：處理行動端滑動與點擊衝突
     let startY = 0;
     let startX = 0;
     let isMoving = false;
 
+    // 點擊事件處理
     container.addEventListener('touchstart', (e) => {
         startY = e.touches[0].pageY;
         startX = e.touches[0].pageX;
@@ -274,33 +275,29 @@ RELIGIONS.forEach(rel => {
     container.addEventListener('touchmove', (e) => {
         const moveY = Math.abs(e.touches[0].pageY - startY);
         const moveX = Math.abs(e.touches[0].pageX - startX);
-        // 如果垂直或水平移動超過 10px，判定為捲動/切換卡片，不執行翻轉
         if (moveY > 10 || moveX > 10) isMoving = true;
     }, { passive: true });
 
     container.addEventListener('click', (e) => {
-        // 如果正在滑動，不觸發點擊事件
+        // 1. 如果正在大幅移動（捲動中），不觸發翻轉
         if (isMoving) return;
-        
-        // 如果點擊發生在背面的捲動內容區域內，且卡片已經是翻開狀態，則不觸發翻轉回正面
-        // 這樣可以讓使用者點擊背面文字或按鈕時更安全
-        if (container.classList.contains('rotate-y-180') && scrollContent.contains(e.target)) {
-            // 除非是特定的翻回按鈕（目前沒有，靠空白處點擊翻回）
-            // 我們這裡維持點擊空白翻回，但避開滑動干擾
+
+        // 2. 核心邏輯：如果是在背面點擊，且 scrollContent 正在捲動或點擊在內容上
+        // 我們檢查點擊是否在背面，且卡片已經翻轉
+        if (container.classList.contains('rotate-y-180')) {
+            // 在背面時，只有點擊到邊緣或特定區域才翻回去，防止捲動時誤觸
+            // 這裡我們簡化：點擊背面依然翻回，但因為 isMoving 判定，捲動動作不會觸發此處
+            container.classList.remove('rotate-y-180');
+        } else {
+            container.classList.add('rotate-y-180');
         }
-        
-        container.classList.toggle('rotate-y-180');
     });
 
-    // 重要：阻止背面捲動容器的事件干擾到外層 Gallery 的橫向滑動
-    scrollContent.addEventListener('touchstart', (e) => {
-        e.stopPropagation();
-    }, { passive: true });
-
-    scrollContent.addEventListener('touchmove', (e) => {
-        // 只有當垂直滑動時才阻止冒泡，確保背面捲動順暢
-        e.stopPropagation();
-    }, { passive: true });
+    // 針對背面的捲動容器進行特殊處理
+    scrollContent.addEventListener('scroll', () => {
+        // 捲動時標記為 Moving 防止誤翻轉
+        isMoving = true;
+    });
 
     gallery.appendChild(cardWrapper);
 });
