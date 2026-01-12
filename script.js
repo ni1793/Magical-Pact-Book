@@ -145,6 +145,7 @@ const gallery = document.getElementById('gallery');
 
 RELIGIONS.forEach(rel => {
     const cardWrapper = document.createElement('div');
+    // 手機版寬度縮小到 260px (見 index.html 中的 style)
     cardWrapper.className = 'card-wrapper w-[300px] h-[540px] snap-center perspective-2000 py-4 transition-all duration-300';
     
     cardWrapper.innerHTML = `
@@ -154,30 +155,30 @@ RELIGIONS.forEach(rel => {
                 <div class="w-full h-full bg-white/95 flex flex-col overflow-hidden" style="border-radius: 0.9rem;">
                     <div class="h-[60%] w-full flex flex-col items-center justify-center p-6 relative" style="background-color: ${rel.color};">
                         <div class="absolute inset-0 bg-black/5 opacity-10"></div>
-                        <div class="absolute w-44 h-44 border-2 border-white/30 rounded-full animate-spin-slow"></div>
-                        <div class="relative z-10 p-5 rounded-full bg-white/90 shadow-xl">
-                            <i data-lucide="${rel.icon}" class="${rel.accent} w-12 h-12 stroke-[1.5]"></i>
+                        <div class="absolute w-32 h-32 sm:w-44 sm:h-44 border-2 border-white/30 rounded-full animate-spin-slow"></div>
+                        <div class="relative z-10 p-4 sm:p-5 rounded-full bg-white/90 shadow-xl">
+                            <i data-lucide="${rel.icon}" class="${rel.accent} w-8 h-8 sm:w-12 sm:h-12 stroke-[1.5]"></i>
                         </div>
                         <div class="absolute bottom-6 text-center z-10 w-full px-4">
-                            <h2 class="text-2xl font-black text-white drop-shadow-md tracking-tight">${rel.name}</h2>
-                            <div class="w-10 h-0.5 bg-white/70 mx-auto mt-2 rounded-full"></div>
+                            <h2 class="text-xl sm:text-2xl font-black text-white drop-shadow-md tracking-tight">${rel.name}</h2>
+                            <div class="w-8 sm:w-10 h-0.5 bg-white/70 mx-auto mt-2 rounded-full"></div>
                         </div>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between items-center text-center">
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between items-center text-center">
                         <div>
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Contractor Class</p>
-                            <p class="text-xs font-bold ${rel.accent}">${rel.title}</p>
+                            <p class="text-[8px] sm:text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Contractor Class</p>
+                            <p class="text-[10px] sm:text-xs font-bold ${rel.accent}">${rel.title}</p>
                         </div>
-                        <div class="w-full grid grid-cols-3 gap-2 border-t border-slate-100 pt-4">
+                        <div class="w-full grid grid-cols-3 gap-1 sm:gap-2 border-t border-slate-100 pt-3 sm:pt-4">
                             ${rel.stats.map(s => `
                                 <div>
-                                    <div class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">${s.label}</div>
-                                    <div class="text-sm font-black ${rel.accent}">${s.value}</div>
+                                    <div class="text-[7px] sm:text-[8px] text-slate-400 font-bold uppercase mb-0.5">${s.label}</div>
+                                    <div class="text-xs sm:text-sm font-black ${rel.accent}">${s.value}</div>
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="mt-2 flex items-center gap-2 text-[8px] font-black text-slate-300 tracking-widest">
-                            <i data-lucide="info" class="w-3 h-3"></i> 點擊展開詳情
+                        <div class="mt-2 flex items-center gap-2 text-[7px] sm:text-[8px] font-black text-slate-300 tracking-widest">
+                            <i data-lucide="info" class="w-2.5 h-2.5 sm:w-3 sm:h-3"></i> 點擊展開詳情
                         </div>
                     </div>
                 </div>
@@ -185,67 +186,67 @@ RELIGIONS.forEach(rel => {
 
             <!-- 背面 -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
-                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 p-5" style="border-radius: 0.9rem;">
-                    <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
-                        <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
-                        <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
+                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 p-4 sm:p-5" style="border-radius: 0.9rem;">
+                    <div class="flex items-center gap-3 mb-3 sm:mb-4 shrink-0 pb-2 sm:pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
+                        <i data-lucide="${rel.icon}" class="${rel.accent} w-4 h-4 sm:w-5 sm:h-5"></i>
+                        <h3 class="text-xs sm:text-sm font-black text-slate-700">${rel.name} 詳解</h3>
                     </div>
 
-                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-100 shadow-inner relative italic">
-                        <p class="text-[11px] text-slate-700 font-bold leading-relaxed text-center relative z-10 incantation-shadow">
+                    <div class="mb-4 sm:mb-5 p-3 sm:p-4 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-100 shadow-inner relative italic">
+                        <p class="text-[10px] sm:text-[11px] text-slate-700 font-bold leading-relaxed text-center relative z-10 incantation-shadow">
                             ${rel.incantation}
                         </p>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="space-y-3 sm:space-y-4">
                         <div class="grid grid-cols-2 gap-2">
-                            <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
-                                    <i data-lucide="sword" class="w-2.5 h-2.5"></i> 法器
+                            <div class="bg-white p-2 sm:p-2.5 rounded-xl border border-slate-100 shadow-sm">
+                                <div class="text-[7px] sm:text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
+                                    <i data-lucide="sword" class="w-2 sm:w-2.5 h-2 sm:h-2.5"></i> 法器
                                 </div>
-                                <div class="text-[10px] font-bold ${rel.accent}">${rel.relic.name}</div>
+                                <div class="text-[9px] sm:text-[10px] font-bold ${rel.accent}">${rel.relic.name}</div>
                             </div>
-                            <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
-                                    <i data-lucide="map" class="w-2.5 h-2.5"></i> 場域
+                            <div class="bg-white p-2 sm:p-2.5 rounded-xl border border-slate-100 shadow-sm">
+                                <div class="text-[7px] sm:text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
+                                    <i data-lucide="map" class="w-2 sm:w-2.5 h-2 sm:h-2.5"></i> 場域
                                 </div>
-                                <div class="text-[10px] font-bold ${rel.accent}">${rel.domain.name}</div>
+                                <div class="text-[9px] sm:text-[10px] font-bold ${rel.accent}">${rel.domain.name}</div>
                             </div>
                         </div>
 
                         <div>
-                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
-                                <i data-lucide="shield" class="w-2.5 h-2.5"></i> 被動加護
+                            <h4 class="text-[7px] sm:text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-1.5 flex items-center gap-1">
+                                <i data-lucide="shield" class="w-2 sm:w-2.5 h-2 sm:h-2.5"></i> 被動加護
                             </h4>
-                            <p class="text-[10px] text-slate-600 leading-relaxed bg-white p-3 rounded-xl border border-slate-100 shadow-sm italic">
+                            <p class="text-[9px] sm:text-[10px] text-slate-600 leading-relaxed bg-white p-2.5 sm:p-3 rounded-xl border border-slate-100 shadow-sm italic">
                                 ${rel.passive}
                             </p>
                         </div>
 
-                        <div class="space-y-2">
-                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
-                                <i data-lucide="zap" class="w-2.5 h-2.5"></i> 核心技能
+                        <div class="space-y-1.5 sm:space-y-2">
+                            <h4 class="text-[7px] sm:text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 sm:mb-1.5 flex items-center gap-1">
+                                <i data-lucide="zap" class="w-2 sm:w-2.5 h-2 sm:h-2.5"></i> 核心技能
                             </h4>
                             ${rel.activeSkills.map(s => `
-                                <div class="bg-white/80 p-3 rounded-xl border border-slate-100 shadow-sm">
-                                    <div class="text-[10px] font-black ${rel.accent} mb-0.5">${s.name}</div>
-                                    <p class="text-[9px] text-slate-500 leading-tight">${s.desc}</p>
+                                <div class="bg-white/80 p-2 sm:p-3 rounded-xl border border-slate-100 shadow-sm">
+                                    <div class="text-[9px] sm:text-[10px] font-black ${rel.accent} mb-0.5">${s.name}</div>
+                                    <p class="text-[8px] sm:text-[9px] text-slate-500 leading-tight">${s.desc}</p>
                                 </div>
                             `).join('')}
                         </div>
 
                         <div class="pt-2 border-t border-slate-100 pb-4">
-                            <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100/50 shadow-sm">
-                                <div class="text-[9px] font-black text-indigo-700 mb-1 flex items-center gap-1.5 uppercase">
-                                    <i data-lucide="users" class="w-3 h-3"></i> ${rel.groupSkill.name} (連攜技)
+                            <div class="bg-indigo-50 p-2 sm:p-3 rounded-xl border border-indigo-100/50 shadow-sm">
+                                <div class="text-[8px] sm:text-[9px] font-black text-indigo-700 mb-1 flex items-center gap-1.5 uppercase">
+                                    <i data-lucide="users" class="w-2.5 sm:w-3 h-2.5 sm:h-3"></i> ${rel.groupSkill.name}
                                 </div>
-                                <p class="text-[9px] text-indigo-600/80 leading-snug font-medium">${rel.groupSkill.desc}</p>
+                                <p class="text-[8px] sm:text-[9px] text-indigo-600/80 leading-snug font-medium">${rel.groupSkill.desc}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-4 flex justify-center pb-6">
-                        <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest shadow-md">
+                    <div class="mt-3 sm:mt-4 flex justify-center pb-4 sm:pb-6">
+                        <div class="px-3 sm:px-4 py-1 sm:py-1.5 bg-slate-800 rounded-full text-white text-[8px] sm:text-[9px] font-black tracking-widest shadow-md">
                             ${rel.philosophy}
                         </div>
                     </div>
