@@ -3,8 +3,8 @@ const RELIGIONS = [
         id: 'folk',
         name: '臺灣民間信仰',
         title: '萬靈共生之守護者',
-        color: 'from-rose-400 via-pink-400 to-orange-400',
-        accent: 'text-rose-600',
+        color: '#DB4D6D',
+        accent: 'text-[#DB4D6D]',
         icon: 'flame',
         stats: [{ label: '感應', value: 95 }, { label: '守護', value: 100 }, { label: '福報', value: 88 }],
         relic: { name: '新月聖筊', desc: '溝通神意的媒介，能強行修改「機率」走向。' },
@@ -23,8 +23,8 @@ const RELIGIONS = [
         id: 'buddhism',
         name: '正信佛教',
         title: '大覺悟之般若少女',
-        color: 'from-amber-300 via-yellow-400 to-orange-500',
-        accent: 'text-amber-800',
+        color: '#FC9F4D',
+        accent: 'text-[#FC9F4D]',
         icon: 'sun',
         stats: [{ label: '智慧', value: 100 }, { label: '悲憫', value: 98 }, { label: '解脫', value: 92 }],
         relic: { name: '摩尼珠串', desc: '記錄每一粒念珠的功德，轉動時釋放強大「定力」。' },
@@ -43,8 +43,8 @@ const RELIGIONS = [
         id: 'taoism',
         name: '正統道教',
         title: '玄門法教之神諭者',
-        color: 'from-slate-700 via-indigo-600 to-purple-800',
-        accent: 'text-indigo-400',
+        color: '#2B5F75',
+        accent: 'text-[#2B5F75]',
         icon: 'moon',
         stats: [{ label: '法力', value: 96 }, { label: '調和', value: 100 }, { label: '長生', value: 90 }],
         relic: { name: '七星法劍', desc: '引星辰之力，斬斷目標與負面因果的連結。' },
@@ -63,8 +63,8 @@ const RELIGIONS = [
         id: 'christianity',
         name: '基督新教',
         title: '聖約恩典之光少女',
-        color: 'from-sky-300 via-blue-400 to-indigo-500',
-        accent: 'text-blue-700',
+        color: '#7DB9DE',
+        accent: 'text-[#7DB9DE]',
         icon: 'cross',
         stats: [{ label: '信靠', value: 100 }, { label: '感召', value: 94 }, { label: '連動', value: 98 }],
         relic: { name: '真理之劍 (聖經)', desc: '神之話語的結晶，能切開任何謊言與幻象。' },
@@ -83,8 +83,8 @@ const RELIGIONS = [
         id: 'catholicism',
         name: '天主教',
         title: '聖事聖殿之詠唱者',
-        color: 'from-indigo-100 via-purple-200 to-indigo-300',
-        accent: 'text-indigo-800',
+        color: '#7B90D2',
+        accent: 'text-[#7B90D2]',
         icon: 'shield-check',
         stats: [{ label: '恩典', value: 97 }, { label: '傳承', value: 100 }, { label: '聖化', value: 95 }],
         relic: { name: '聖體光座', desc: '散發純淨聖光，對陰影屬性敵人造成持續灼燒。' },
@@ -103,8 +103,8 @@ const RELIGIONS = [
         id: 'ikuan',
         name: '一貫道',
         title: '三寶心法之導引者',
-        color: 'from-emerald-300 via-teal-400 to-cyan-500',
-        accent: 'text-teal-800',
+        color: '#66BAB7',
+        accent: 'text-[#66BAB7]',
         icon: 'flower-2',
         stats: [{ label: '修身', value: 100 }, { label: '凝聚', value: 96 }, { label: '齋修', value: 92 }],
         relic: { name: '母燈神火', desc: '象徵本性的燈火，能照亮目標隱藏的弱點。' },
@@ -123,8 +123,8 @@ const RELIGIONS = [
         id: 'newage',
         name: '身心靈流派',
         title: '星際覺醒之靈癒者',
-        color: 'from-indigo-400 via-purple-400 to-fuchsia-400',
-        accent: 'text-purple-700',
+        color: '#4E4F97',
+        accent: 'text-[#4E4F97]',
         icon: 'sparkles',
         stats: [{ label: '頻率', value: 100 }, { label: '顯化', value: 95 }, { label: '覺知', value: 98 }],
         relic: { name: '水晶頌缽', desc: '高頻震盪法器，能強行校準區域內的能量頻率。' },
@@ -133,7 +133,7 @@ const RELIGIONS = [
         passive: '【高頻共振】：不受低頻情緒影響，自動將周遭的惡意轉化為中性的背景雜訊。',
         activeSkills: [
             { name: '意念顯化', desc: '將強烈的想像具現化，創造出短暫的戰鬥助手。' },
-            { name: '脈輪修復', desc: '平衡目標的七個能量中心，瞬間回復生命值與專注力。' },
+            { name: '脈輪修復', desc: '平衡目標的能量中心，瞬間回復生命值與專注力。' },
             { name: '星際連結', desc: '獲取高維度星際家人的支援，獲得短暫的無敵飛行狀態。' }
         ],
         groupSkill: { name: '集體冥想營', desc: '多人合體技。將所有人的意念匯聚成巨大的顯化球，重寫現實狀態。' },
@@ -145,14 +145,14 @@ const gallery = document.getElementById('gallery');
 
 RELIGIONS.forEach(rel => {
     const cardWrapper = document.createElement('div');
-    cardWrapper.className = 'card-wrapper flex-shrink-0 w-[300px] h-[540px] snap-center perspective-2000 py-4 transition-all duration-300';
+    cardWrapper.className = 'card-wrapper w-[300px] h-[540px] snap-center perspective-2000 py-4 transition-all duration-300';
     
     cardWrapper.innerHTML = `
-        <div class="card-container w-full h-full cursor-pointer rounded-[2.5rem]">
+        <div class="card-container w-full h-full cursor-pointer" style="border-radius: 1rem;">
             <!-- 正面 -->
-            <div class="card-face card-front bg-gradient-to-br ${rel.color} p-[2px] shadow-lg">
-                <div class="w-full h-full bg-white/95 rounded-[2.4rem] flex flex-col overflow-hidden">
-                    <div class="h-[60%] w-full bg-gradient-to-br ${rel.color} flex flex-col items-center justify-center p-6 relative">
+            <div class="card-face card-front p-[2px] shadow-lg" style="background-color: ${rel.color};">
+                <div class="w-full h-full bg-white/95 flex flex-col overflow-hidden" style="border-radius: 0.9rem;">
+                    <div class="h-[60%] w-full flex flex-col items-center justify-center p-6 relative" style="background-color: ${rel.color};">
                         <div class="absolute inset-0 bg-black/5 opacity-10"></div>
                         <div class="absolute w-44 h-44 border-2 border-white/30 rounded-full animate-spin-slow"></div>
                         <div class="relative z-10 p-5 rounded-full bg-white/90 shadow-xl">
@@ -185,13 +185,13 @@ RELIGIONS.forEach(rel => {
 
             <!-- 背面 -->
             <div class="card-face card-back bg-white p-[2px] shadow-xl border border-slate-100">
-                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 rounded-[2.4rem]">
+                <div class="scroll-content no-scrollbar bg-gradient-to-b from-white to-slate-50 p-5" style="border-radius: 0.9rem;">
                     <div class="flex items-center gap-3 mb-4 shrink-0 pb-3 border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
                         <i data-lucide="${rel.icon}" class="${rel.accent} w-5 h-5"></i>
                         <h3 class="text-sm font-black text-slate-700">${rel.name} 詳解</h3>
                     </div>
 
-                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-2xl border border-slate-100 shadow-inner relative italic">
+                    <div class="mb-5 p-4 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-100 shadow-inner relative italic">
                         <p class="text-[11px] text-slate-700 font-bold leading-relaxed text-center relative z-10 incantation-shadow">
                             ${rel.incantation}
                         </p>
@@ -200,19 +200,32 @@ RELIGIONS.forEach(rel => {
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-2">
                             <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1">法器</div>
+                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
+                                    <i data-lucide="sword" class="w-2.5 h-2.5"></i> 法器
+                                </div>
                                 <div class="text-[10px] font-bold ${rel.accent}">${rel.relic.name}</div>
                             </div>
                             <div class="bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm">
-                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1">場域</div>
+                                <div class="text-[8px] font-black text-slate-400 uppercase mb-1 flex items-center gap-1">
+                                    <i data-lucide="map" class="w-2.5 h-2.5"></i> 場域
+                                </div>
                                 <div class="text-[10px] font-bold ${rel.accent}">${rel.domain.name}</div>
                             </div>
                         </div>
-                        <div class="bg-white p-3 rounded-xl border border-slate-100">
-                            <h4 class="text-[8px] font-black text-slate-400 uppercase mb-1.5">被動加護</h4>
-                            <p class="text-[10px] text-slate-600 leading-relaxed">${rel.passive}</p>
+
+                        <div>
+                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+                                <i data-lucide="shield" class="w-2.5 h-2.5"></i> 被動加護
+                            </h4>
+                            <p class="text-[10px] text-slate-600 leading-relaxed bg-white p-3 rounded-xl border border-slate-100 shadow-sm italic">
+                                ${rel.passive}
+                            </p>
                         </div>
+
                         <div class="space-y-2">
+                            <h4 class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+                                <i data-lucide="zap" class="w-2.5 h-2.5"></i> 核心技能
+                            </h4>
                             ${rel.activeSkills.map(s => `
                                 <div class="bg-white/80 p-3 rounded-xl border border-slate-100 shadow-sm">
                                     <div class="text-[10px] font-black ${rel.accent} mb-0.5">${s.name}</div>
@@ -220,14 +233,19 @@ RELIGIONS.forEach(rel => {
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100">
-                             <div class="text-[9px] font-black text-indigo-700 mb-1 uppercase">${rel.groupSkill.name} (連攜技)</div>
-                             <p class="text-[9px] text-indigo-600/80">${rel.groupSkill.desc}</p>
+
+                        <div class="pt-2 border-t border-slate-100 pb-4">
+                            <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100/50 shadow-sm">
+                                <div class="text-[9px] font-black text-indigo-700 mb-1 flex items-center gap-1.5 uppercase">
+                                    <i data-lucide="users" class="w-3 h-3"></i> ${rel.groupSkill.name} (連攜技)
+                                </div>
+                                <p class="text-[9px] text-indigo-600/80 leading-snug font-medium">${rel.groupSkill.desc}</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="mt-4 flex justify-center pb-8">
-                        <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest">
+                    <div class="mt-4 flex justify-center pb-6">
+                        <div class="px-4 py-1.5 bg-slate-800 rounded-full text-white text-[9px] font-black tracking-widest shadow-md">
                             ${rel.philosophy}
                         </div>
                     </div>
@@ -238,13 +256,45 @@ RELIGIONS.forEach(rel => {
 
     const container = cardWrapper.querySelector('.card-container');
 
-    container.addEventListener('click', () => {
+    container.addEventListener('click', (e) => {
+        // 防止拖動時誤觸點擊
+        if (isDragging) return;
         const isFlipped = container.classList.toggle('rotate-y-180');
-        // 同步狀態給 wrapper，這會觸發手機版的 CSS (變長模式)
         cardWrapper.classList.toggle('is-flipped', isFlipped);
     });
 
     gallery.appendChild(cardWrapper);
+});
+
+// 電腦版滑鼠拖動捲動邏輯
+let isDown = false;
+let startX;
+let scrollLeft;
+let isDragging = false;
+
+gallery.addEventListener('mousedown', (e) => {
+    isDown = true;
+    isDragging = false;
+    gallery.classList.add('active');
+    startX = e.pageX - gallery.offsetLeft;
+    scrollLeft = gallery.scrollLeft;
+});
+
+gallery.addEventListener('mouseleave', () => {
+    isDown = false;
+});
+
+gallery.addEventListener('mouseup', () => {
+    isDown = false;
+});
+
+gallery.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    isDragging = true;
+    const x = e.pageX - gallery.offsetLeft;
+    const walk = (x - startX) * 2; // 捲動速度
+    gallery.scrollLeft = scrollLeft - walk;
 });
 
 window.onload = () => lucide.createIcons();

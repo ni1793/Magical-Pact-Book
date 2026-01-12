@@ -10,12 +10,45 @@ body {
     perspective: 2000px;
 }
 
+/* 漂浮感動畫 */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-twinkle {
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.card-wrapper {
+    animation: float 6s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.card-wrapper:nth-child(even) {
+    animation-delay: -3s;
+}
+
 .card-container {
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     transform-style: preserve-3d;
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.card-wrapper:hover .card-container {
+    box-shadow: 0 30px 60px rgba(232, 122, 144, 0.2);
 }
 
 .card-face {
@@ -25,7 +58,7 @@ body {
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    border-radius: 2.5rem;
+    border-radius: 1rem;
 }
 
 .card-back {
@@ -36,24 +69,41 @@ body {
     transform: rotateY(180deg); 
 }
 
-/* =============================================
-   手機版核心修正：翻開後變長，且 Y 軸固定佈局
-   ============================================= */
+/* 電腦版專屬：橫向滾動選卡優化 */
+@media (min-width: 769px) {
+    #gallery {
+        cursor: grab;
+        padding-bottom: 80px;
+    }
+    #gallery:active {
+        cursor: grabbing;
+    }
+    
+    .scroll-content {
+        height: 100%;
+        overflow-y: auto !important;
+        padding: 1.25rem;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* 手機版核心 */
 @media (max-width: 768px) {
-    /* 1. 容器翻轉後高度改為 auto，並取消 Y 軸偏移的可能干擾 */
+    .card-wrapper {
+        animation: none !important; 
+    }
+
     .card-wrapper.is-flipped {
         height: auto !important;
         min-height: 540px;
-        /* 確保卡片在垂直軸上穩定對齊 */
         align-self: flex-start;
     }
 
     .card-container.rotate-y-180 {
-        transform: none !important; /* 手機版展開模式不使用 3D 旋轉防止 Y 軸位移錯誤 */
+        transform: none !important; 
         height: auto !important;
     }
 
-    /* 2. 翻面後的顯示邏輯：強制內容在 Y 軸流向中佔位 */
     .card-wrapper.is-flipped .card-front {
         display: none !important; 
     }
@@ -65,11 +115,9 @@ body {
         min-height: 540px;
         display: block !important;
         z-index: 10;
-        /* 防止任何可能導致 Y 軸晃動的屬性 */
         backface-visibility: visible;
     }
 
-    /* 3. 內容容器：確保捲動是由頁面 Y 軸控制，而非卡片內部 */
     .scroll-content {
         height: auto !important;
         overflow-y: visible !important; 
@@ -77,21 +125,13 @@ body {
         display: flex;
         flex-direction: column;
     }
-}
-
-/* =============================================
-   電腦版維持原始：固定高度 + 內部捲動
-   ============================================= */
-@media (min-width: 769px) {
-    .scroll-content {
-        height: 100%;
-        overflow-y: auto !important;
-        padding: 1.25rem;
-        -webkit-overflow-scrolling: touch;
+    
+    #gallery {
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 }
 
-/* 通用裝飾 */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -99,11 +139,11 @@ body {
 .animate-spin-slow { animation: rotate-slow 15s linear infinite; }
 
 .glass {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .incantation-shadow {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
 }
